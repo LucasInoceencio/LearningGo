@@ -2,6 +2,8 @@
 
 Repositório criado para salvar informações relacionadas ao aprendizado de Go.
 
+# Conteúdo de apoio
+
 Site com exemplos de código para se aprender GO:
 
 https://gobyexample.com/
@@ -25,7 +27,7 @@ Dentro dessa pasta deve ter outras três pastas sendos elas: "pkg", "src" e "bin
 A estrutura raiz ficará do seguinte formato:
 
 ```
-pastaUsuario
+usuario
     go
 		pkg: Onde ficará os pacotes
 		src: Onde ficará os códigos fontes
@@ -39,20 +41,25 @@ Uma caracterísca forte do Go é que o mesmo tem uma convenção rígida e que i
 
 Segue alguns itens da convenção de Go
 
-- Não colocar ; ao final de cada instrução
-- As chaves devem ser iniciadas na frente da instrução
-- Não deve ser declaradas variavéis que não estão sendo utilizadas
-    - Neste cenário não é permitido nem a compilação do projeto
+- Não colocar ; ao final de cada instrução;
+- As chaves devem ser iniciadas na frente da instrução;
+- Não deve ser declaradas variavéis que não estão sendo utilizadas;
+    - Neste cenário não é permitido nem a compilação do projeto;
+    - Caso alguma funções retorne mais de um item e não queira utilizar um desses retornos, pode-se utilizar o ```_``` que é para ignorar essa variável;
 
 # Um pouco da sintaxe de Go
 
 ## Declarando variáveis
 
 ```go
+
+// Forma tradicional
 var nome string 
 
+// Forma realizando a atribuição e o próprio Go inferindo o tipo da variável de acordo com o valor atribuído
 var nome = "Um nome qualquer"
 
+// Forma utilizando o operador de atribuição curta, onde o Go infere o tipo da variável pelo valor atribuído
 nome := "Mais um nome
 ```
 
@@ -77,18 +84,70 @@ default:
 }
 ```
 
+## Endereço de uma variável
 
-:= é um operador de atribuição curto
+Para informar o endereço de uma variável basta colocar ```&``` e o nome da variável. Esse recurso é utilizado para se passar em uma função e etc, assim você faz o apontamento do local onde a informação deverá ser armazenada.
 
-&nome da variável está passando o endereço da variável
+## Funções
 
-Em Go as funções podem retornar mais de um valor
+Em Go as funções podem retornar mais de um valor, então é importante sempre tratar o retorno das funções.
 
-O _ é um identificador em branco, serve para informar para o Go ignorar uma determinada variável
+```go
+func MinhaPrimeiraFuncao(nome string) string{
+    result := "Seja bem-vindo" + nome
+    return result
+}
+```
 
-O for sem nenhum argumento irá rodar indefinidamente
+## Operador discarde
 
+O ```_``` é um identificador em branco, serve para informar para o Go ignorar uma determinada variável. Muito utilizado quando se chama uma função que retorna mais de um item, mas você só deseja manipular um desses itens.
 
+## For
+
+Em Go não temos while ou do while, a estrutura de iteração de resume no for que pode assumir várias formas. 
+
+### For infinito 
+
+```go
+// Exemplo de um for infinito
+for  {
+
+} 
+```
+
+### For tradicional
+
+```go
+var sites [4]string
+sites[0] = "https://random-status-code.herokuapp.com"
+sites[1] = "https://www.alura.com.br"
+sites[2] = "https://www.caelum.com.br"
+sites[3] = "https://www.google.com.br"
+
+for i := 0; i < len(sites); i++ {
+	resp, _ := http.Get(sites[i])
+	if resp.StatusCode == 200 {
+		fmt.Println("Site:", sites[i], "foi carregado com sucesso!")
+	} else {
+		fmt.Println("Site:", sites[i], "está com problemas. Status Code:", resp.StatusCode)
+	}
+}
+```
+
+### For utilizando range
+
+```go
+var sites [4]string
+sites[0] = "https://random-status-code.herokuapp.com"
+sites[1] = "https://www.alura.com.br"
+sites[2] = "https://www.caelum.com.br"
+sites[3] = "https://www.google.com.br"
+
+for i, site := range sites {
+    fmt.Println("Index", i, "é referente ao site:", site)
+}
+```
 
 ## Array
 
@@ -119,7 +178,13 @@ var sites []string {
 A função len irá retornar a quantidade de itens que possue dentro de um array ou slice.
 
 ```go
+var sites [5]string {
+    "https://random-status-code.herokuapp.com",
+    "https://www.alura.com.br"
+    "https://www.caelum.com.br"
+}
 quantidadeSites := len(sites)
+// Irá retornar 3, pois é a quantidade de itens que possui dentro do array.
 ```
 
 ## Função Cap
@@ -127,5 +192,26 @@ quantidadeSites := len(sites)
 A função cap irá retornar a capacidade de um array ou slice. Pois essa estrutura pode ter uma capacidade de 4 itens mas só ter 3 itens preenchendo a estrutura.
 
 ```go
-capacidadeArray := cap(arrayQualquer)
+var sites [5]string {
+    "https://random-status-code.herokuapp.com",
+    "https://www.alura.com.br"
+    "https://www.caelum.com.br"
+}
+capacidadeArray := cap(sites)
+// Irá retornar 5, pois é a quantidade de itens que cabe dentro desse array.
+```
+
+## Função Append
+
+Esas função permite adicionar um item em um slice ou array. Lembrando que no caso do slice quando é adicionado algo além da capacidade do mesmo, ele irá dobrar a sua capacidade.
+
+```go
+var sites []string {
+    "https://random-status-code.herokuapp.com",
+    "https://www.alura.com.br"
+    "https://www.caelum.com.br"
+}
+
+sites = append(sites, "https://www.google.com.br")
+// O slice passará a ter uma capacidade de 6 itens.
 ```

@@ -69,16 +69,6 @@ func iniciarMonitoramento() {
 		"https://www.caelum.com.br",
 		"https://www.google.com.br"}
 
-	// For convencional
-	// for i := 0; i < len(sites); i++ {
-	// 	resp, _ := http.Get(sites[i])
-	// 	if resp.StatusCode == 200 {
-	// 		fmt.Println("Site:", sites[i], "foi carregado com sucesso!")
-	// 	} else {
-	// 		fmt.Println("Site:", sites[i], "está com problemas. Status Code:", resp.StatusCode)
-	// 	}
-	// }
-
 	for i := 0; i < quantidadeMonitoramentos; i++ {
 		for _, site := range sites {
 			testarSite(site)
