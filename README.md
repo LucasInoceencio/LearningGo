@@ -215,3 +215,135 @@ var sites []string {
 sites = append(sites, "https://www.google.com.br")
 // O slice passará a ter uma capacidade de 6 itens.
 ```
+
+## Estrutura
+
+```go
+type ContaCorrente struct {
+	titular       string
+	numeroAgencia int
+	numeroConta   int
+	saldo         float64
+}
+```
+
+### Criando estrutura
+
+```go
+var contaLucas ContaCorrente = ContaCorrente{}
+```
+
+### Criando estrutura com operador de atribuição curto
+
+```go
+contaLucas := ContaCorrente{}
+```
+### Criando e iniciando os valores
+
+```go
+contaLucas := ContaCorrente{
+    titular: "Lucas",
+    numeroAgencia: 589,
+    numeroConta: 123456 ,
+    saldo: 125.5,
+}
+
+// Ou
+
+contaLucas2 := ContaCorrente{"Lucas", 589, 123456, 125.5}
+
+// Ou
+
+// Precisa do ponteiro para definir o local onde essa conta irá ficar
+var contaCristina *ContaCorrente
+contaCristina = new(ContaCorrente)
+contaCristina.titular = "Cristina"
+contaCristina.numeroAgencia = 349
+contaCristina.numeroConta = 98765
+contaCristina.saldo = 0.80
+
+// Ou
+
+var contaCristina2 = new(ContaCorrente)
+contaCristina2.titular = "Cristina"
+contaCristina2.numeroAgencia = 349
+contaCristina2.numeroConta = 98765
+contaCristina2.saldo = 0.80
+```
+
+## *
+
+É um ponteiro.
+
+## &
+
+É o endereço.
+
+## Comparando structs
+
+É comparado os valores das propriedades e não o endereço da memória.
+
+```go
+contaLucas := ContaCorrente{
+    titular:       "Lucas",
+    numeroAgencia: 589,
+    numeroConta:   123456,
+    saldo:         125.5,
+}
+
+contaLucas2 := ContaCorrente{
+    titular:       "Lucas",
+    numeroAgencia: 589,
+    numeroConta:   123456,
+    saldo:         125.5,
+}
+
+// O resultado será true
+fmt.Println(contaLucas == contaLucas2)
+
+
+contaLucas3 := ContaCorrente{"Lucas", 589, 123456, 125.5}
+contaLucas4 := ContaCorrente{"Lucas", 589, 123456, 125.5}
+
+// O resultado será true
+fmt.Println(contaLucas3 == contaLucas4)
+
+
+var contaCristina *ContaCorrente
+contaCristina = new(ContaCorrente)
+contaCristina.titular = "Cristina"
+contaCristina.numeroAgencia = 349
+contaCristina.numeroConta = 98765
+contaCristina.saldo = 0.80
+
+var contaCristina2 *ContaCorrente
+contaCristina2 = new(ContaCorrente)
+contaCristina2.titular = "Cristina"
+contaCristina2.numeroAgencia = 349
+contaCristina2.numeroConta = 98765
+contaCristina2.saldo = 0.80
+
+// O resultado será false
+fmt.Println(contaCristina == contaCristina2)
+
+// O resultado será true pois com o * ele irá comparar o conteúdo
+fmt.Println(*contaCristina == *contaCristina2)
+
+var contaCristina3 = new(ContaCorrente)
+contaCristina3.titular = "Cristina"
+contaCristina3.numeroAgencia = 349
+contaCristina3.numeroConta = 98765
+contaCristina3.saldo = 0.80
+
+var contaCristina4 = new(ContaCorrente)
+contaCristina4.titular = "Cristina"
+contaCristina4.numeroAgencia = 349
+contaCristina4.numeroConta = 98765
+contaCristina4.saldo = 0.80
+
+// O resultado será false
+fmt.Println(contaCristina3 == contaCristina4)
+
+// Irá imprimir o endereço
+fmt.Println(&contaCristina3)
+```
