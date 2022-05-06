@@ -347,3 +347,49 @@ fmt.Println(contaCristina3 == contaCristina4)
 // Irá imprimir o endereço
 fmt.Println(&contaCristina3)
 ```
+
+## Modificador de acesso em Go
+
+Os modificadores de acesso em Go são feitos com base no case da primeira letra da propriedade.
+
+```go
+contaLucas := ContaCorrente{
+    titular: "Lucas", // Só vai ser visível dentro desse arquivo pois começou com letra minúscula
+    NumeroAgencia: 589, // Vai ser visível a partir de outros arquivos pois começa com letra maiúscula
+    NumeroConta: 123456 , // Vai ser visível a partir de outros arquivos pois começa com letra maiúscula
+    saldo: 125.5, // Só vai ser visível dentro de arquivo pois começou com letra minúscula
+}
+```
+
+## Alias para import
+
+```go
+import (
+	alias "LearningGo/Banco/contas"
+	"fmt"
+)
+
+conta1 := alias.ContaCorrente{}
+```
+
+## Instanciando structs com composição
+
+```go
+contaDoBruno := contas.ContaCorrente{
+    Titular: clientes.Titular{
+        Nome:      "Bruno",
+        CPF:       "123.111.123.12",
+        Profissao: "Desenvolvedor",
+    },
+    NumeroAgencia: 123,
+    NumeroConta:   123456,
+    Saldo:         100.,
+}
+fmt.Println(contaDoBruno)
+
+// Ou
+
+clienteAndre := clientes.Titular{"Andre", "123.123.123.12", "Desenvolvedor Go"}
+contaDoAndre := contas.ContaCorrente{clienteAndre, 123, 123456, 100.}
+fmt.Println(contaDoAndre)
+```
